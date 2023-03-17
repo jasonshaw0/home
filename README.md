@@ -1,2 +1,1 @@
-# jasonshaw.github.io
-Simple website text
+Placeholder Text
