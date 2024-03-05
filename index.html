@@ -1,62 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Jason Shaw - Homepage</title>
-        <link rel="stylesheet" type="text/css" href="styles.css">
-        <link
-            href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
-            rel="stylesheet">
-    </head>
-    <body>
-        <div id="animated-text">Jason Shaw</div>
-        <div id="subtext">Welcome to my Website!</div>
-        <p> This website and its projects are coded entirely from
-            HTML/CSS/JS</p>
-        <p> Email me for questions: jj@mountmyfish.com</p>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jason Shaw - Homepage</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="animated-text">Jason Shaw</div>
+  <div id="subtext">Welcome to my Website!</div>
+  <p> This website and the projects on it are coded entirely from HTML/CSS/JS</p>
+  <p> Email me for questions: jj@mountmyfish.com</p>
 
-        <div id="about-me">
-            <div class="dropdown">
-                <button onclick="toggleDropdown('myDropdown')" class="dropbtn">Code Projects ⮟</button>
-                <div id="myDropdown" class="dropdown-content">
-                    <div id="personal-projects">
-                        <a class="project-button" onclick="window.location.href='https://slaxxis.github.io/JasonShaw/JSClock.html'">JavaScript Clock</a>
-                        <a class="project-button" onclick="window.location.href='https://slaxxis.github.io/JasonShaw/CatGenerator.html'">Cat Generator</a>
-                        <a class="project-button" onclick="window.location.href='https://slaxxis.github.io/JasonShaw/JokeGenerator.html'">Joke Generator</a>
-                        <a class="project-button" onclick="window.location.href='https://github.com/Slaxxis/Slaxxis.github.io'">Original GitHub</a>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="dropdown">
-                <button onclick="toggleDropdown('skillsDropdown')" class="dropbtn">Programming Skills ⮟</button>
-                <div id="skillsDropdown" class="dropdown-content">
-                    <div class="skill">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 90%;"><span>Python</span></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 90%;"><span>LaTeX</span></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 90%;"><span>HTML/CSS/JS</span></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 90%;"><span>C++</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
+  <div id="about-me">
 
-            <script src="script.js"></script>
-        </body>
-    </html>
+  <div id="personal-projects">
+    <h2 class="project-label">HTML Web Projects</h2>
+    <button class="project-button" onclick="window.location.href='https://slaxxis.github.io/JasonShaw/JSClock.html'"><span>JavaScript Clock</span></button>
+    <button class="project-button" onclick="window.location.href='https://slaxxis.github.io/JasonShaw/CatGenerator.html'"><span>Cat Generator</span></button>
+    <button class="project-button" onclick="window.location.href='https://slaxxis.github.io/JasonShaw/JokeGenerator.html'"><span>Joke Generator</span></button>
+    <button class="project-button" onclick="window.location.href='https://github.com/Slaxxis/Slaxxis.github.io'"><span>Original GitHub</span></button>
+  </div>
+
+  <div id="skills">
+    <h2 style="text-align: center;">Programming Skills</h2>
+    <div class="skill">
+      <span class="skill-name">Python</span>
+      <div class="progress-bar">
+        <div class="progress" style="width: 75%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <span class="skill-name">LaTeX</span>
+      <div class="progress-bar">
+        <div class="progress" style="width: 90%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <span class="skill-name">HTML/CSS/JS</span>
+      <div class="progress-bar">
+        <div class="progress" style="width: 90%;"></div>
+      </div>
+    </div>
+    <div class="skill">
+      <span class="skill-name">C++</span>
+      <div class="progress-bar">
+        <div class="progress" style="width: 70%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
