@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Cat Generator with Frame</title>
+<style>
+  body {
+    background-color: #000000;
+    color: white;
+    font-family: "Fira Code", monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 90vh;
+    margin: 0;
+  }
+  .frame {
+    border: 8px solid #303030; /* Darker grey frame */
+    padding: 10px;
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 70%; 
+    min-height: 70%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #cat-image {
+    max-width: 100%;
+    max-height: 100%; 
+    min-width: 100%;
+    min-height: 100%;/* Adjusted to ensure cat fits within the frame */
+  }
+  #generate-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  #generate-button:hover {
+    background-color: #8b8b8b;
+    transform: scale(1.05);
+  }
+  #footer {
+    text-align: center;
+    font-size: 14px;
+    opacity: 0.7;
+    margin-top: 20px;
+  }
+  #back-button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    opacity: 1;
+  }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="frame">
+  <img id="cat-image" src="" alt="Random Cat">
+</div>
+<button id="generate-button">Generate Cat</button>
+<script>
+  const catImageElement = document.getElementById("cat-image");
+  const generateButton = document.getElementById("generate-button");
+
+  function fetchRandomCat() {
+    fetch("https://api.thecatapi.com/v1/images/search")
+      .then(response => response.json())
+      .then(data => {
+        const imageUrl = data[0].url;
+        catImageElement.src = imageUrl;
+      })
+      .catch(error => {
+        console.error("Error fetching cat image:", error);
+      });
+  }
+
+  fetchRandomCat();
+
+  generateButton.addEventListener("click", fetchRandomCat);
+</script>
+<div id="footer">
+  HTML Cat Generator<br>
+  Created by Jason Shaw
+</div>
+<a id="back-button" href="https://jasonshaw0.github.io/home/">Back</a>
+</body>
+</html>
