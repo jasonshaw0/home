@@ -7,8 +7,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  margin: 5;
-  text-anchor: start;
+  margin: 5px;
 }
 
 #animated-text {
@@ -45,7 +44,7 @@ body {
   margin: 5px;
   border: none;
   height: 25px;
-  width: 100%;
+  width: 80%;
   border-radius: 10px;
   background-color: #0091ff;
   color: rgb(0, 0, 0);
@@ -54,8 +53,7 @@ body {
   font-family: monospace;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
-  transform: translate(-10%, -5%);
-  align-items: center;
+  text-align: center;
   display: inline-flex;
 }
 
@@ -63,7 +61,6 @@ body {
   background-color: #00559f;
   transform: scale(1.05);
 }
-
 
 #skills {
   height: 25px;
@@ -78,7 +75,6 @@ body {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  text-anchor: start;
   font-family: monospace;
   font-size: 20px;
   color: #000000;
@@ -86,6 +82,7 @@ body {
 
 .skill-name {
   font-size: 20px;
+  text-align: center;
 }
 
 .progress-bar {
@@ -95,21 +92,21 @@ body {
   position: absolute;
   border: none;
   height: 25px;
-  width: 100%;
+  width: 80%;
   border-radius: 10px;
-  background-color: #00559f;
+  background-color: #002f58;
   font-size: 20px;
   font-weight: bold;
   font-family: monospace;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
-  transform: translate(-80%, -5%);
   align-items: center;
+  text-decoration: underline;
 }
 
 .progress {
   height: 100%;
-  background-color: #0091ff;
+  background-color: #00ccff;
   transition: width 1s;
   border-radius: 10px;
 }
@@ -176,9 +173,10 @@ p {
 }
 
 span {
-  text-anchor: start;
+  align-items: center;
   text-align: center;
   font-family: monospace;
   font-size: 20px;
   color: #000000;
+  text-decoration: underline;
 }
