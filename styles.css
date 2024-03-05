@@ -7,26 +7,27 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh;
-  margin: 0;
+  margin: 5;
+  text-anchor: start;
 }
 
 #animated-text {
-  font-size: 32px;
+  font-size: 52px;
   animation: pulsate 2s ease-in-out infinite;
 }
 
 @keyframes pulsate {
   0% {
-    transform: scale(1);
-    opacity: 0.7;
+      transform: scale(1);
+      opacity: 0.7;
   }
   50% {
-    transform: scale(1.2);
-    opacity: 1;
+      transform: scale(1.2);
+      opacity: 1;
   }
   100% {
-    transform: scale(1);
-    opacity: 0.7;
+      transform: scale(1);
+      opacity: 0.7;
   }
 }
 
@@ -36,27 +37,26 @@ body {
 }
 
 #personal-projects {
-  margin-top: 40px;
   text-align: center;
 }
 
-.project-label {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
 
 .project-button {
-  padding: 10px 20px;
-  margin: 10px;
+  margin: 5px;
   border: none;
-  border-radius: 5px;
+  height: 25px;
+  width: 100%;
+  border-radius: 10px;
   background-color: #0091ff;
   color: rgb(0, 0, 0);
   font-size: 20px;
-  font-weight:bold;
-  font-family:monospace;
+  font-weight: bold;
+  font-family: monospace;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
+  transform: translate(-10%, -5%);
+  align-items: center;
+  display: inline-flex;
 }
 
 .project-button:hover {
@@ -64,48 +64,121 @@ body {
   transform: scale(1.05);
 }
 
-#about-me {
-  margin-top: 20px;
-  text-align: center;
-}
 
 #skills {
-  margin-top: 40px;
-  text-align: center;
+  height: 25px;
+  width: 100%;
+  border-radius: 10px;
 }
 
 .skill {
-  margin-top: 20px;
+  height: 25px;
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  text-anchor: start;
+  font-family: monospace;
+  font-size: 20px;
+  color: #000000;
 }
 
 .skill-name {
-  margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .progress-bar {
+  min-width: 300px;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+  z-index: -2;
+  position: absolute;
+  border: none;
+  height: 25px;
   width: 100%;
-  background-color: #00559f;
-  height: 20px;
   border-radius: 10px;
-  position: relative;
-  overflow: hidden;
+  background-color: #00559f;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  transform: translate(-80%, -5%);
+  align-items: center;
 }
 
 .progress {
   height: 100%;
   background-color: #0091ff;
-  border-radius: 10px;
   transition: width 1s;
+  border-radius: 10px;
 }
-p {
 
+p {
   margin-bottom: 10px;
   margin-bottom: -8px;
   font-style: italic;
   text-align: center;
+}
 
+.dropbtn {
+  background-color: #3498DB;
+  color: rgb(0, 0, 0);
+  padding: 5px 20px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: monospace;
+  border: rgb(0, 0, 0);
+  cursor: pointer;
+  border-radius: 10px;
+  margin-top: 14px;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover,
+.dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  background-color: #000000;
+  min-width: 300px;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+  z-index: -1;
+  position: absolute;
+  top: 130%; /* Center the dropdown content vertically */
+  left: 45%; /* Center the dropdown content horizontally */ /* Center the dropdown content */
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: inline-flex;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
+}
+
+span {
+  text-anchor: start;
+  text-align: center;
+  font-family: monospace;
+  font-size: 20px;
+  color: #000000;
 }
