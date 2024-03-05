@@ -39,12 +39,15 @@ body {
   text-align: center;
 }
 
+h2 {
+  margin-top: 25px;
+}
 
 .project-button {
   margin: 5px;
   border: none;
-  height: 25px;
-  width: 80%;
+  height: 80px;
+  width: 150px;
   border-radius: 10px;
   background-color: #0091ff;
   color: rgb(0, 0, 0);
@@ -54,12 +57,12 @@ body {
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
   text-align: center;
-  display: inline-flex;
+  display: inline-block;
 }
 
 .project-button:hover {
   background-color: #00559f;
-  transform: scale(1.05);
+  transform: scale(1.125);
 }
 
 #skills {
@@ -78,11 +81,13 @@ body {
   font-family: monospace;
   font-size: 20px;
   color: #000000;
+  align-items: center;
 }
 
 .skill-name {
   font-size: 20px;
   text-align: center;
+  display: inline-block;
 }
 
 .progress-bar {
@@ -102,6 +107,7 @@ body {
   transition: background-color 0.2s, transform 0.2s;
   align-items: center;
   text-decoration: underline;
+  position: absolute;
 }
 
 .progress {
@@ -109,6 +115,7 @@ body {
   background-color: #00ccff;
   transition: width 1s;
   border-radius: 10px;
+  position: absolute;
 }
 
 p {
