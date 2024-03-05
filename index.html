@@ -1,63 +1,207 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jason Shaw - Homepage</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-</head>
-<body>
-  <div id="animated-text">Jason Shaw</div>
-    <div id="subtext"; style="font-size: 2;">Welcome to my Website!</div>
-    <p style="text-decoration: none; border: 2px dotted white; margin: 10px; padding: 10px;"> This website and its projects are coded from scratch using HTML/CSS/JS
-    </p>
+body {
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  font-family: "Fira Code", monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 5px;
+}
 
-    <div id="about-me">
-        <div class="dropdown">
-          <button class="project-button" onclick="toggleDropdown()">Projects
-                <i id="arrowIcon" class="fas fa-caret-down dropdown-arrow"></i>
-            </button>
-          <div id="dropdownContent" class="dropdown-content">
-            <a href="https://jasonshaw0.github.io/home/jsclock.html">JavaScript Clock</a>
-            <a href="https://jasonshaw0.github.io/home/cats.html">Cat Generator</a>
-            <a href="https://jasonshaw0.github.io/home/jokes.html">Joke Generator</a>
-          </div>
-        </div>
-      </div>
-    
-  <div id="Skills" style="margin-top: 40px;">
-    <h2 style="text-align: center;">Programming Skills</h2>
-    <div class="skill">
-      <span class="skill-name">Python</span>
-      <div class="progress-bar" >
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-    <div class="skill">
-      <span class="skill-name">LaTeX</span>
-      <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-    <div class="skill">
-      <span class="skill-name">HTML/CSS</span>
-      <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-    <div class="skill">
-      <span class="skill-name">JavaScript</span>
-      <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-  </div>
-  
-  <script src="script.js"></script>
+#animated-text {
+  font-size: 52px;
+  animation: pulsate 2s ease-in-out infinite;
+  font-weight: bold;
+}
 
-<div class="parent" style="margin-top: 30px; color: white; font-size: 15px; text-align: center;">Contact Me: jj@mountmyfish.com</div>
-  
-</body>
-</html>
+@keyframes pulsate {
+  0% {
+      transform: scale(1);
+      opacity: 0.7;
+  }
+  50% {
+      transform: scale(1.2);
+      opacity: 1;
+  }
+  100% {
+      transform: scale(1);
+      opacity: 0.7;
+  }
+}
+
+.square {
+  width: 100px;
+  height: 100px;
+  background-color: #00000000;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+}
+#subtext {
+  font-size: 17px;
+  margin-top: 10px;
+  font-style: italic;
+
+}
+
+#personal-projects {
+  text-align: center;
+}
+
+h2 {
+  text-decoration: underline;
+}
+
+.project-button {
+  margin: 5px;
+  border: none;
+  height: 50px;
+  width: 200px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  font-weight: bold;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  text-align: center;
+}
+
+.parent {
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.children {
+ display: inline-block;
+}
+
+.project-button:hover {
+  background-color: #d1d1d1;
+  transform: scale(1.16);
+}
+
+#skills {
+  height: 25px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.skill {
+  height: 25px;
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  font-family: monospace;
+  font-size: 20px;
+  color: #000000;
+  align-items: center;
+}
+
+.skill-name {
+  margin: auto;
+  font-size: 15px;
+  text-align: left;
+  display: inline-block;
+}
+
+.progress-bar {
+  min-width: 300px;
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.2);
+  z-index: -2;
+  position: absolute;
+  border: none;
+  height: 25px;
+  width: 80%;
+  border-radius: 10px;
+  background-color: #6e6e6e;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: monospace;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  text-align: left;
+}
+
+.progress {
+  height: 100%;
+  background-color: #ffffff;
+  transition: width 3s;
+  border-radius: 10px;
+  position: absolute;
+}
+
+p {
+  font-style: italic;
+  text-align: center;
+  text-decoration: underline;
+}
+
+a {
+  text-align: center;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-button {
+  position: relative;
+  display: flex;
+  min-width: 200px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #000000;
+  padding: 15px 44px;
+  text-decoration: none;
+  display: block;
+  outline: 2px solid rgb(0, 0, 0);
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #929292;
+  transform: scale(1.1);
+}
+
+span {
+  align-items: left;
+  text-align: left;
+  font-family: monospace;
+  font-size: 15px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.arrow-icon {
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.rotate-up {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease-in-out;
+}
