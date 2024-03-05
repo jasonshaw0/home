@@ -33,7 +33,7 @@ function animateProgressBar(progressBar, targetWidth) {
           width++;
           progressBarElement.style.width = width + "%";
       }
-  }, 10); // Adjust the interval for smoother animation
+  }, 30); // Adjust the interval for smoother animation
 }
 
 document.addEventListener("DOMContentLoaded", function () {
