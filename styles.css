@@ -1,5 +1,5 @@
 body {
-  background-color: #000000;
+  background-color: #006783;
   color: rgb(255, 255, 255);
   font-family: "Fira Code", monospace;
   display: flex;
@@ -67,6 +67,7 @@ h2 {
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
   text-align: center;
+  white-space: nowrap;
 }
 
 .parent {
