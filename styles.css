@@ -17,9 +17,9 @@
 .space {
   position: fixed;
   width: 200vw;
-  height: 250vh;
-  animation:spin 240s linear infinite;
-  background-size: 120px;
+  height: 220vh;
+  animation:spin 100s linear infinite;
+  background-size: 150px;
   backface-visibility: visible;
   
   /* Had to base64 SVG background for FF compatibility */
@@ -65,7 +65,7 @@ body {
   border-radius: 10px;
 }
 #subtext {
-  font-size: 17px;
+  font-size: 22px;
   margin-top: 10px;
   font-style: italic;
 
@@ -233,3 +233,91 @@ span {
   transition: transform 0.3s ease-in-out;
 }
 
+.glitch-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #000000;
+}
+
+.glitch {
+  position: relative;
+  font-size: 16px;
+  text-align: center;
+  color: #ffffff;
+  letter-spacing: 3px;
+  z-index: 1;
+}
+
+.glitch:before,
+.glitch:after {
+  display: block;
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.8;
+}
+
+.glitch:before {
+  animation: glitch-it 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+  color: #ffffff;
+  z-index: -1;
+}
+
+.glitch:after {
+  animation: glitch-it 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+  color: #777777;
+  z-index: -2;
+}
+
+@keyframes glitch-it {
+  0% {
+     transform: translate(0);
+  }
+  20% {
+     transform: translate(-1.3px, 1.3px);
+  }
+  40% {
+     transform: translate(-1.3px, -1.3px);
+  }
+  60% {
+     transform: translate(1.3px, 1.3px);
+  }
+  80% {
+     transform: translate(1.3px, -1.3px);
+  }
+  to {
+     transform: translate(0);
+  }
+}
+
+h4 {
+  font-weight: 700;
+  text-align: center;
+  font-size: 15px;
+  font-family: monospace;
+  background: linear-gradient(90deg, #000, #fff, #000);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  animation: shine 5s linear infinite;
+  position: relative;
+  white-space: nowrap;
+}
+
+@keyframes shine {
+  0% {
+    background-position-x: -500%;
+  }
+  100% {
+    background-position-x: 500%;
+  }
+}
+
+/*  Checkout my other pens on  https://codepen.io/grohit/  */
