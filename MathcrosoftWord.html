@@ -4,9 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text to Desmos Graph</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://www.desmos.com/api/v1.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
 </head>
+<style>
+    body {
+        background-color: gray;
+        font-style: italic;
+        font-family: monospace;
+        text-align: center;
+        align-items: center;
+    }
+
+    h1,
+    p {
+        color: white;
+    }
+
+    #calculator {
+        width: 90vw;
+        height: 70vh;
+        margin: auto;
+    }
+
+    @media (max-width: 768px) {
+        #calculator {
+            width: 90vw;
+            height: 50vh; /* Adjust the height for smaller screens */
+        }
+    }
+</style>
 <body>
 
 <h1>Jason Shaw: Desmos Text Editor</h1>
@@ -14,7 +40,7 @@
 <p>Enter text below (currently only English letters, spaces, and line breaks supported):</p>
 <textarea id="textInput" rows="3" cols="30" oninput="graphTextAndZoom()" onkeydown="handleKeyDown(event)"></textarea>
 
-<div id="calculator" style="width: 90vw; height: 70vh;"></div>
+<div id="calculator"></div>
 
 <script>
     var calculator = Desmos.GraphingCalculator(document.getElementById('calculator'), {
@@ -29,16 +55,29 @@
         showYAxis: true,
         showGrid: true,
         showResetButtonOnGraphpaper: true,
-		lockViewport: true,
+        lockViewport: true,
     });
-	calculator.setMathBounds({ left: -1, right: 35, bottom: -1, top: 20 });
+
+    // Set initial offset values based on viewport width
+    var viewportWidth = window.innerWidth;
+    var initialXOffset, initialYOffset;
+
+    if (viewportWidth < 768) {
+        initialXOffset = 1;
+        initialYOffset = 13;
+    } else {
+        initialXOffset = 1;
+        initialYOffset = 18;
+    }
+
+    calculator.setMathBounds({ left: -1, right: 35, bottom: -1, top: 20 });
 
     // Store the initial axis settings
     var initialAxisSettings = {
         showXAxis: calculator.settings.showXAxis,
         showYAxis: calculator.settings.showYAxis,
         showGrid: calculator.settings.showGrid,
-		lockViewport: calculator.settings.lockViewPort
+        lockViewport: calculator.settings.lockViewPort
     };
 
     function graphTextAndZoom() {
@@ -47,12 +86,12 @@
             showXAxis: initialAxisSettings.showXAxis,
             showYAxis: initialAxisSettings.showYAxis,
             showGrid: initialAxisSettings.showGrid,
-			lockViewport: initialAxisSettings.lockViewPort
+            lockViewport: initialAxisSettings.lockViewPort
         });
 
         var textInput = document.getElementById('textInput').value.toUpperCase();
-        var xOffset = 1;
-        var yOffset = 18;
+        var xOffset = initialXOffset;
+        var yOffset = initialYOffset;
 
         var lines = textInput.split('\n');
 
@@ -80,11 +119,15 @@
             }
 
             yOffset += -1.5;
-            xOffset = 1;
+            xOffset = initialXOffset;
         }
 
-        // Set math bounds
-        calculator.setMathBounds({ left: -1, right: 35, bottom: -1, top: 20 });
+        // Set math bounds based on viewport width
+        if (viewportWidth < 768) {
+            calculator.setMathBounds({ left: -1, right: 20, bottom: -1, top: 15 });
+        } else {
+            calculator.setMathBounds({ left: -1, right: 35, bottom: -1, top: 20 });
+        }
     }
 
     function handleKeyDown(event) {
