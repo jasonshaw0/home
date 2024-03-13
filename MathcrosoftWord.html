@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Desmos Graph</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.desmos.com/api/v1.8/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+</head>
+<body>
+
+<h1>Jason Shaw: Desmos Text Editor</h1>
+<p>This program uses the Desmos API and a whole lot of JavaScript to graph typed input as math equations. Text may appear stretched on mobile.</p>
+<p>Enter text below (currently only English letters, spaces, and line breaks supported):</p>
+<textarea id="textInput" rows="3" cols="30" oninput="graphTextAndZoom()" onkeydown="handleKeyDown(event)"></textarea>
+
+<div id="calculator" style="width: 90vw; height: 70vh;"></div>
+
+<script>
+    var calculator = Desmos.GraphingCalculator(document.getElementById('calculator'), {
+        expressions: true,
+        settingsMenu: false,
+        zoomButtons: false,
+        expressionsCollapsed: true,
+        expressionsTopbar: false,
+        keypad: false,
+        border: true,
+        showXAxis: true,
+        showYAxis: true,
+        showGrid: true,
+        showResetButtonOnGraphpaper: true,
+		lockViewport: true,
+    });
+	calculator.setMathBounds({ left: -1, right: 35, bottom: -1, top: 20 });
+
+    // Store the initial axis settings
+    var initialAxisSettings = {
+        showXAxis: calculator.settings.showXAxis,
+        showYAxis: calculator.settings.showYAxis,
+        showGrid: calculator.settings.showGrid,
+		lockViewport: calculator.settings.lockViewPort
+    };
+
+    function graphTextAndZoom() {
+        calculator.setBlank();
+        calculator.updateSettings({
+            showXAxis: initialAxisSettings.showXAxis,
+            showYAxis: initialAxisSettings.showYAxis,
+            showGrid: initialAxisSettings.showGrid,
+			lockViewport: initialAxisSettings.lockViewPort
+        });
+
+        var textInput = document.getElementById('textInput').value.toUpperCase();
+        var xOffset = 1;
+        var yOffset = 18;
+
+        var lines = textInput.split('\n');
+
+        for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+            var line = lines[lineIndex];
+
+            for (var i = 0; i < line.length; i++) {
+                var letter = line[i];
+
+                if (isLetter(letter) || letter === ' ') {
+                    var equations = getEquationsForLetter(letter);
+                    equations.forEach((equation, index) => {
+                        equation = equation.replace(/(\d+(\.\d+)?)\s*,/g, (match, p1) => (parseFloat(p1) + xOffset).toString() + ',');
+                        equation = equation.replace(/(\d+(\.\d+)?)\s*\)/g, (match, p1) => (parseFloat(p1) + yOffset).toString() + ')');
+                        calculator.setExpression({ type: 'expression', latex: equation, label: letter + index, lines: true, points: false });
+                    });
+
+                    xOffset += 1.2;
+                    yOffset += 0;
+
+                    if (letter === ' ') {
+                        xOffset -= 0.1;
+                    }
+                }
+            }
+
+            yOffset += -1.5;
+            xOffset = 1;
+        }
+
+        // Set math bounds
+        calculator.setMathBounds({ left: -1, right: 35, bottom: -1, top: 20 });
+    }
+
+    function handleKeyDown(event) {
+        if (event.keyCode === 13) {
+            document.getElementById('textInput').value += '\n';
+            graphTextAndZoom();
+            event.preventDefault();
+        }
+
+        if (event.key === ' ') {
+            document.getElementById('textInput').value += ' ';
+            graphTextAndZoom();
+            event.preventDefault();
+        }
+    }
+
+    function isLetter(c) {
+        return c.toLowerCase() !== c.toUpperCase();
+    }
+
+    function getEquationsForLetter(letter) {
+        // Your existing switch case for letter equations
+        switch (letter) {
+            case 'A':
+                return ['(0,0),(0.5,1),(0.75,0.5),(0.25,0.5),(0.75,0.5),(1,0)'];
+
+            case 'B':
+                return ['(0,0),(0,1),(0.75,1),(1,0.75),(0.75,0.5),(0,0.5),(0.75,0.5),(1,0.25),(0.75,0),(0,0)'];
+
+            case 'C':
+                return ['(1,0),(0,0),(0,1),(1,1)'];
+
+            case 'D':
+                return ['(0,0),(1,0.25),(1,0.75),(0,1),(0,0)'];
+
+            case 'E':
+                return ['(0,0),(1,0),(0,0),(0,0.5),(1,0.5),(0,0.5),(0,1),(1,1)'];
+
+            case 'F':
+                return ['(0,0),(0,0.5),(1,0.5),(0,0.5),(0,1),(1,1)'];
+
+            case 'G':
+                return ['(1,1),(0,1),(0,0),(1,0),(1,0.5),(0.5,0.5),(1,0.5),(1,0)'];
+
+            case 'H':
+                return ['(0,0),(0,1),(0,0.5),(1,0.5),(1,1),(1,0)'];
+
+            case 'I':
+                return ['(0.2,0),(0.5,0),(0.5,1),(0.25,1),(0.75,1),(0.5,1),(0.5,0),(0.75,0)'];
+
+            case 'J':
+                return ['(0,0.25),(0,0),(1,0),(1,1),(1,0)'];
+
+            case 'K':
+                return ['(0,0),(0,1),(0,0.5),(1,1),(0,0.5),(1,0)'];
+
+            case 'L':
+                return ['(0,1),(0,0),(1,0)'];
+
+            case 'M':
+                return ['(0,0),(0,1),(0.5,0.5),(1,1),(1,0)'];
+
+            case 'N':
+                return ['(0,0),(0,1),(1,0),(1,1)'];
+
+            case 'O':
+                return ['(0.5,0),(0,0.25),(0,0.75),(0.5,1),(1,0.75),(1,0.25),(0.5,0)'];
+
+            case 'P':
+                return ['(0,0),(0,1),(1,1),(1,0.5),(0,0.5)'];
+
+            case 'Q':
+                return ['(1,0),(1,1),(0,1),(0,0.5),(1,0.5)'];
+
+            case 'R':
+                return ['(0,0),(0,1),(1,1),(1,0.5),(0,0.5),(1,0)'];
+
+            case 'S':
+                return ['(0,0.25),(0,0.1),(0.5,0),(1,0.25),(0,0.75),(0.5,1),(1,0.9),(1,0.75)'];
+
+            case 'T':
+                return ['(0.5,0),(0.5,1),(0,1),(1,1),(0.5,1),(0.5,0)'];
+
+            case 'U':
+                return ['(0,1),(0,0),(1,0),(1,1)'];
+
+            case 'V':
+                return ['(0,1),(0.5,0),(1,1)'];
+
+            case 'W':
+                return ['(0,1),(0.25,0),(0.5,1),(0.75,0),(1,1)'];
+
+            case 'X':
+                return ['(0,0),(1,1),(0.5,0.5),(0,1),(1,0)'];
+
+            case 'Y':
+                return ['(0,0),(0.5,0.5),(0,1),(0.5,0.5),(1,1)'];
+
+            case 'Z':
+                return ['(0,1),(1,1),(0,0),(1,0)'];
+			
+            default:
+                return [];
+        }
+    }
+</script>
+
+</body>
+</html>
