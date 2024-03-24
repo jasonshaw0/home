@@ -1,67 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jason Shaw - Homepage</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Infinite Runner Game</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000000;
+    font-family:    Verdana, Geneva, Tahoma, sans-serif
+  }
+
+  #start-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+  .h1 {
+    font-size: 35px;
+    color: rgb(232, 232, 232);
+
+  }
+
+  .h2{
+    font-size: 70px;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    margin-top: 40px;
+    text-decoration: underline;
+  }
+  .h3 {
+    font-size: 50px;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+  }
+  #game-container {
+    position: relative;
+    width: 100%; /* Adjusted width for more space */
+    height: 100%;
+    border: 1px solid #000;
+    overflow: hidden;
+    background-image: url(background.jpg);
+    background-size: cover;
+    background-position: 0 0; /* Initial background position */
+  }
+
+  .player {
+    position: absolute;
+    bottom: 10%;
+    clip-path: circle(50% at 50% 50%);
+    left: 200px;
+    background-image: url(Player.PNG);
+    background-size: contain;
+    width: 55px;
+    height: 55px; /* Changed height to match the width for a perfect circle */
+    transition: bottom 0.2s; /* Added transition for smoother jump */
+    animation: roll 1.5s infinite linear; /* Added rolling animation */
+}
+
+@keyframes roll {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+}
+  .player2 {
+    position: absolute;
+    bottom: 14%;
+    left: 120px;
+    width: 75px;
+    height: 180px;
+
+    background-size: cover;
+    transition: bottom 0.2s; /* Added transition for smoother jump */
+  }
+
+  .legs {
+    position: absolute;
+    bottom: -40px;
+    right: 80px;
+    clip-path: url(foot.png);
+    width: 100%;
+    background-image: url(foot.png);
+    height: 100%;
+    background-color: transparent;
+    animation: legMove 0.4s infinite alternate;
+  }
+
+  .leg-left {
+    right: 10px;
+    background-size: contain;
+  }
+
+  .leg-right {
+    left: 20px;
+    background-size: contain;
+  }
+
+  @keyframes legMove {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(20deg);
+    }
+  }
+
+  .obstacle {
+  position: absolute;
+  bottom: 10%;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  width: 40px; /* Increased width for better visibility */
+  height: 40px; /* Increased height for better visibility */
+  background-color: #ff0000; /* Changed obstacle color to red */
+  animation: obstacleMove 4s linear infinite; /* Added animation for obstacle movement */
+}
+
+@keyframes obstacleMove {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%); /* Move the obstacle to the left by 100% of its width */
+  }
+}
+
+  .road {
+    position: absolute;
+    bottom: 0%;
+    width: 200%; /* Double the width to create a moving effect */
+    height: 10%;
+    background-image: url(road2.jpg);
+    background-size: contain;
+    animation: roadMove 5s linear infinite; /* Added animation for road movement */
+}
+
+@keyframes roadMove {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-50%); /* Move the road to the left by 100% of its width */
+    }
+}
+
+  #score {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+
+  #game-over {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #000;
+    border-radius: 30px;
+    text-align: center;
+  }
+
+  button {
+    color: black;
+    background-color: white;
+    padding: 10px;
+    width: 90%;
+  }
+
+  @media only screen and (max-width: 1000px) {
+    .h1 {
+      font-size: 60px;
+    }
+    
+    .h2 {
+      font-size: 100px;
+      margin-top: 90px;
+    }
+
+    .road {
+        height: 20%;
+    }
+
+    .player {
+      width: 100px;
+      height: 100px;
+      bottom: 20%;
+    }
+
+    .player2{
+        bottom: 21.5%;
+        height: 300px;
+    }
+    .obstacle {
+      width: 70px;
+      height: 70px;
+      bottom: 20%;
+    }
+
+    #game-over {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 10%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #000;
+    border-radius: 30px;
+    text-align: center;
+  }
+
+  button {
+    color: black;
+    background-color: white;
+    padding: 10px;
+    width: 90%;
+    height: 60%;
+  }
+  }
+
+</style>
 </head>
 <body>
-    
-    <div class="waveWrapper waveAnimation">
-        <div class="waveWrapperInner bgTop">
-          <div class="wave waveTop" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png')"></div>
-        </div>
-        <div class="waveWrapperInner bgMiddle">
-          <div class="wave waveMiddle" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-mid.png')"></div>
-        </div>
-        <div class="waveWrapperInner bgBottom">
-          <div class="wave waveBottom" style="background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png')"></div>
-        </div>
-      </div>
-    <div class="animated-text" id="animated-text">Jason Shaw</div>
+<div id="game-container">
+  <div class="h1" id="score" style="top: 25%">Score: 0</div>
+  <div class="h2">Run From A Foot Monster!</div>
+  <div class="h3" style="font-size: 30px;">Click the screen to jump over obstacles</div>
+  <div id="start-screen">
+    <div class="h3">Tap to Start</div>
+  </div>
+  <div id="game-over">
+    <h2>Game Over</h2>
+    <button onclick="restartGame()">Restart</button>
+  </div>
+  <div class="coin"></div>
+  <div class="road"></div>
+  <div class="player2" style="left: 30px;">
+    <div class="legs leg-left"></div>
+    <div class="legs leg-right"></div>
+  </div>
+  <div class="player"></div>
+</div>
 
-    <h2>Projects</h2>
-        <div class="dropdown">
-          <div id="dropdownContent" class="dropdown-content">
-            <a href="https://jasonshaw0.github.io/home/MathcrosoftWord.html">Microsoft Word (in Desmos)</a>
-            <a href="https://jasonshaw0.github.io/home/jsclock.html">JavaScript Clock</a>
-            <a href="https://jasonshaw0.github.io/home/cats.html">Cat Generator</a>
-            <a href="https://jasonshaw0.github.io/home/jokes.html">Joke Generator</a>
-          </div>
-        </div>
-      </div>
-    
-  <div id="Skills" style="bottom: 20%; position: absolute;"">
-    <h2 style="text-align: center;">Programming Skills</h2>
-    <div class="skill">
-      <span class="skill-name">Python</span>
-      <div class="progress-bar" >
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-    <div class="skill">
-      <span class="skill-name">LaTeX</span>
-      <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-    <div class="skill">
-      <span class="skill-name">HTML/CSS</span>
-      <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-    <div class="skill">
-      <span class="skill-name">JavaScript</span>
-      <div class="progress-bar">
-        <div class="progress" style="width: 0%;"></div>
-      </div>
-    </div>
-  </div>  
+<script>
+// JavaScript code to adjust viewport settings based on screen size
+function adjustViewport() {
+  const screenWidth = window.innerWidth;
 
-<script src="script.js"></script>
+  if (screenWidth < 768) {
+    // Adjust viewport settings for smaller screens to make the screen zoom out
+    const viewport = document.querySelector('meta[name="viewport"]');
+    viewport.setAttribute('content', 'width=device-width, initial-scale=0.5, maximum-scale=1.0, user-scalable=no');
+  } else {
+    // Reset viewport settings for larger screens
+    const viewport = document.querySelector('meta[name="viewport"]');
+    viewport.setAttribute('content', 'width=device-width, initial-scale=1.0');
+  }
+}
+
+// Call the adjustViewport function when the page loads and when it's resized
+window.addEventListener('load', adjustViewport);
+window.addEventListener('resize', adjustViewport);
+
+const startScreen = document.getElementById('start-screen');
+let gameStarted = false;
+
+document.addEventListener('click', function() {
+  if (!gameStarted) {
+    startGame();
+    gameStarted = true;
+    startScreen.style.display = 'none';
+  } else {
+    jump();
+  }
+});
+
+  const gameContainer = document.getElementById('game-container');
+  const player = document.querySelector('.player');
+  const gameOver = document.getElementById('game-over');
+  let score = 0;
+  let gameSpeed = 3;
+  let isGameOver = false;
+  let isJumping = false; // To track if the player is currently jumping
+  let jumpCooldown = false; // To track if the player is in cooldown after a jump
+
+  function jump() {
+  if (!isGameOver && !isJumping && !jumpCooldown) {
+    isJumping = true;
+    const screenWidth = window.innerWidth;
+    let playerBottom;
+
+    if (screenWidth < 1000) {
+      playerBottom = '35%'; // Adjusted bottom position for smaller screens
+    } else {
+      playerBottom = '35%'; // Adjusted bottom position for larger screens
+    }
+
+    player.style.bottom = playerBottom;
+
+    setTimeout(() => {
+      player.style.bottom = screenWidth < 1000 ? '20%' : '10%'; // Adjusted bottom position after jump
+      setTimeout(() => {
+        isJumping = false;
+      }, 200); // Adjust the cooldown time here (200 milliseconds)
+    }, 300);
+
+    jumpCooldown = true;
+    setTimeout(() => {
+      jumpCooldown = false;
+    }, 0); // Adjust the cooldown time here (1000 milliseconds)
+  }
+}
+
+function restartGame() {
+    gameOver.style.display = 'none';
+    player.style.bottom = '0';
+    score = 0;
+    isGameOver = false;
+    updateScore();
+    startGame();
+  }
+
+  function updateScore() {
+    document.getElementById('score').textContent = 'Score: ' + score;
+  }
+
+  function startGame() {
+    const obstacles = document.querySelectorAll('.obstacle');
+    obstacles.forEach(obstacle => obstacle.remove());
+    const obstacleInterval = setInterval(() => {
+      if (!isGameOver) {
+        const obstacle = document.createElement('div');
+        obstacle.classList.add('obstacle');
+        obstacle.style.left = gameContainer.offsetWidth + 'px';
+        gameContainer.appendChild(obstacle);
+        const intervalId = setInterval(() => {
+          if (!isGameOver) {
+            if (obstacle.offsetLeft < 0) {
+              clearInterval(intervalId);
+              obstacle.remove();
+              score++;
+              updateScore();
+            } else {
+              obstacle.style.left = obstacle.offsetLeft - 30 + 'px';
+              if (
+                obstacle.offsetLeft < player.offsetLeft + player.offsetWidth &&
+                obstacle.offsetLeft + obstacle.offsetWidth > player.offsetLeft &&
+                obstacle.offsetTop < player.offsetTop + player.offsetHeight &&
+                obstacle.offsetTop + obstacle.offsetHeight > player.offsetTop
+              ) {
+                clearInterval(intervalId);
+                clearInterval(obstacleInterval);
+                isGameOver = true;
+                gameOver.style.display = 'block';
+              }
+            }
+          } else {
+            clearInterval(intervalId);
+          }
+        }, 30);
+      } else {
+        clearInterval(obstacleInterval);
+      }
+    }, 2500); // Adjust the obstacle generation frequency here (milliseconds)
+
+    // Background movement
+    const bgMoveInterval = setInterval(() => {
+      if (!isGameOver) {
+        const currentPos = parseInt(gameContainer.style.backgroundPositionX);
+        gameContainer.style.backgroundPositionX = currentPos - 1 + 'px'; // Adjust speed here
+      } else {
+        clearInterval(bgMoveInterval);
+      }
+    }, 20);
+  }
+
+  document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 32 || event.key === ' ') { // Spacebar
+    jump();
+  }
+});
+
+document.addEventListener('click', function() {
+  jump();
+});
+
+
+
+  startGame();
+</script>
+
 </body>
 </html>
