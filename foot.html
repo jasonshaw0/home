@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Infinite Runner Game</title>
+<title>Foot Monster Game</title>
 <style>
   body {
     margin: 0;
@@ -60,10 +60,11 @@
     bottom: 10%;
     clip-path: circle(50% at 50% 50%);
     left: 200px;
-    background-image: url(Player.PNG);
-    background-size: contain;
-    width: 55px;
-    height: 55px; /* Changed height to match the width for a perfect circle */
+    background-image: url(odom.PNG);
+    background-size: 100%;
+    background-position: -7px;
+    width: 80px;
+    height: 80px; /* Changed height to match the width for a perfect circle */
     transition: bottom 0.2s; /* Added transition for smoother jump */
     animation: roll 1.5s infinite linear; /* Added rolling animation */
 }
@@ -252,12 +253,13 @@
     <button onclick="restartGame()">Restart</button>
   </div>
   <div class="coin"></div>
-  <div class="road"></div>
+  <div class="road"><h1 style="text-align: center;">Coded in html, css, and javascript by J.S.</h1></div>
   <div class="player2" style="left: 30px;">
     <div class="legs leg-left"></div>
     <div class="legs leg-right"></div>
   </div>
   <div class="player"></div>
+  
 </div>
 
 <script>
