@@ -80,10 +80,9 @@
   .player2 {
     position: absolute;
     bottom: 14%;
-    left: 120px;
+    left: 160px;
     width: 75px;
     height: 180px;
-
     background-size: cover;
     transition: bottom 0.2s; /* Added transition for smoother jump */
   }
@@ -156,6 +155,19 @@
         transform: translateX(-50%); /* Move the road to the left by 100% of its width */
     }
 }
+
+#back-button {
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 
   #score {
     position: absolute;
@@ -236,12 +248,14 @@
     width: 90%;
     height: 60%;
   }
+  
   }
 
 </style>
 </head>
 <body>
 <div id="game-container">
+  <button id="back-button" onclick="window.location.href='https://jasonshaw0.github.io/home/index.html'">Back to Homepage</button>
   <div class="h1" id="score" style="top: 25%">Score: 0</div>
   <div class="h2">Run From A Foot Monster!</div>
   <div class="h3" style="font-size: 30px;">Click the screen to jump over obstacles</div>
