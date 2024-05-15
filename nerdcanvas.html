@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Calligram Painter</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .frame {
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 350px; /* Change height to auto */
+  user-select: none;
+  border: 2px solid black;
+  position: relative;
+  overflow: hidden;
+}
+.canvas {
+  width: 100%;
+  user-select: none;
+  height: 100%; /* Change height to 100% */
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+    .symbol {
+      position: absolute;
+      font-size: 12px;
+    }
+    .button {
+  padding: 5px 8px; /* Reduce padding */
+  background-color: #ffffff;
+  border: 1px solid #000000;
+  cursor: pointer;
+  margin: 5px;
+  display: inline-block;
+}
+
+    .button.active {
+      background-color: #d3d3d3;
+    }
+    .settings {
+  height: auto; /* Change height to auto */
+  width: 88%;
+  background-color: rgb(60, 60, 60);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px;
+}
+
+    .setting-name {
+      font-size: 20px;
+      color: white;
+      font-style: italic;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .setting-group {
+  max-height: 200px; /* Set max height for setting groups */
+  overflow-y: auto; /* Allow vertical scrolling if needed */
+}
+
+    .math-types {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      color: white;
+      font-style: italic;
+      font-weight: bold;
+    }
+    .checkbox-columns {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .checkbox-columns label {
+      width: calc(100% / 3);
+    }
+    h2 {
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Jason Shaw - Math Calligram Painter</h1>
+  <h2>Calligrams are words or symbols arranged to form a picture. This website takes that concept and turns it into a paintbrush while also using mathematics  instead of english symbols. </h2>
+  <div class="frame">
+    <div class="canvas" id="canvas"></div>
+  </div>
+  <div class="settings">
+    <div class="math-types">
+      <div class="setting-name">Math Type (symbols):</div>
+      <div class="checkbox-columns">
+        <label><input type="checkbox" class="math-type-checkbox" value="greek" checked> Greek Alphabet</label>
+        <label><input type="checkbox" class="math-type-checkbox" value="calculus"> Calculus</label>
+        <label><input type="checkbox" class="math-type-checkbox" value="algebra"> Algebra</label>
+        <label><input type="checkbox" class="math-type-checkbox" value="geometry"> Geometry</label>
+        <label><input type="checkbox" class="math-type-checkbox" value="linear-algebra"> Linear Algebra</label>
+        <label><input type="checkbox" class="math-type-checkbox" value="number-theory"> Number Theory</label>
+        <!-- Add more checkboxes for other math types as needed -->
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-name">Brush Color:
+        <input type="color" id="color"></input>
+      </div>
+      <button class="button" id="brush-btn">Brush</button>
+      <button class="button" id="eraser-btn">Eraser</button>
+      <button class="button" id="erase-btn">Erase All</button>
+    </div>
+    <div class="setting-group">
+      <div class="setting-name">Brush Size:
+        <input type="range" id="brush-size" min="10" max="40" value="20"></input>
+      </div>
+    </div>
+    <div class="setting-group">
+      <div class="setting-name">Letter Density:
+        <input type="range" id="letter-density" min="1" max="50" value="15"></input>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let painting = false;
+    let currentColor = '#0000ff'; // Default color
+    let brushSize = 20; // Default brush size
+    let letterDensity = 15; // Default letter density
+    let lastPaintTime = 0;
+    let mode = 'brush'; // Default mode
+    const cursorIndicator = document.getElementById('cursor-indicator');
+    const canvas = document.getElementById('canvas');
+    const mathTypeCheckboxes = document.querySelectorAll('.math-type-checkbox');
+  
+    canvas.addEventListener('mousemove', (event) => {
+      const rect = canvas.getBoundingClientRect();
+      const offsetX = event.clientX - rect.left;
+      const offsetY = event.clientY - rect.top;
+  
+      cursorIndicator.style.left = `${offsetX - 10}px`;
+      cursorIndicator.style.top = `${offsetY - 10}px`;
+    });
+  
+    function generateSymbolByMathType() {
+      let symbols = [];
+      mathTypeCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          switch (checkbox.value) {
+            case 'greek':
+              symbols.push('α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω');
+              break;
+            case 'calculus':
+              symbols.push('∫', '∂', '∇', '∞', '∑', '∆'); // Example calculus symbols
+              break;
+            case 'algebra':
+              symbols.push('√', '∠', '∪', '∩', '∈', '⊂'); // Example algebra symbols
+              break;
+            case 'geometry':
+              symbols.push('∠', '⊥', '⋅', '≡', '≈', '∆'); // Example geometry symbols
+              break;
+            case 'linear-algebra':
+              symbols.push('⊕', '⊗', '⊥', '∥', 'ℝ', 'ℂ'); // Example linear algebra symbols
+              break;
+            case 'number-theory':
+              symbols.push('ℤ', 'ℚ', 'ℕ', '∣', '≡', '∼'); // Example number theory symbols
+              break;
+            // Add more cases for other math types
+          }
+        }
+      });
+      return symbols;
+    }
+  
+    function generateSymbol() {
+      const mathTypeSymbols = generateSymbolByMathType();
+      if (mathTypeSymbols.length === 0) {
+        // If no math type is selected, use default symbols
+        return defaultSymbol();
+      } else {
+        // Randomly select symbol from selected math types
+        return mathTypeSymbols[Math.floor(Math.random() * mathTypeSymbols.length)];
+      }
+    }
+  
+    // Default symbols function (if no math type is selected)
+    function defaultSymbol() {
+      const symbols = ['α', 'β', 'γ', 'δ', 'ε', 'ζ', 'η', 'θ', 'ι', 'κ', 'λ', 'μ', 'ν', 'ξ', 'ο', 'π', 'ρ', 'σ', 'τ', 'υ', 'φ', 'χ', 'ψ', 'ω'];
+      return symbols[Math.floor(Math.random() * symbols.length)];
+    }
+  
+    function paintSymbol(event) {
+      if (!painting) return;
+  
+      const currentTime = Date.now();
+      if (currentTime - lastPaintTime < (500 / letterDensity)) return;
+      lastPaintTime = currentTime;
+  
+      const rect = canvas.getBoundingClientRect();
+      const offsetX = event.clientX - rect.left;
+      const offsetY = event.clientY - rect.top;
+  
+      if (mode === 'brush') {
+        const symbol = generateSymbol();
+        const symbolElem = document.createElement('div');
+        symbolElem.textContent = symbol;
+        symbolElem.style.left = `${offsetX}px`;
+        symbolElem.style.top = `${offsetY}px`;
+        symbolElem.style.fontSize = `${brushSize}px`; // Set the brush size
+        symbolElem.style.color = currentColor; // Use the selected color
+        symbolElem.classList.add('symbol');
+        canvas.appendChild(symbolElem);
+      } else if (mode === 'eraser') {
+        const symbols = document.elementsFromPoint(event.clientX, event.clientY).filter(elem => elem.classList.contains('symbol'));
+        if (symbols.length > 0) {
+          symbols[0].remove();
+        }
+      }
+    }
+  
+    canvas.addEventListener('mousedown', (event) => {
+      painting = true;
+      paintSymbol(event); // Paint immediately on mousedown
+    });
+    canvas.addEventListener('mouseup', () => painting = false);
+    canvas.addEventListener('mouseleave', () => painting = false); // Stop painting if cursor leaves canvas
+    canvas.addEventListener('mousemove', paintSymbol);
+
+const eraseBtn = document.getElementById('erase-btn');
+eraseBtn.addEventListener('click', () => {
+  canvas.innerHTML = ''; 
+});
+
+const colorInput = document.getElementById('color');
+colorInput.addEventListener('input', (event) => {
+  currentColor = event.target.value; // Update the current color
+});
+
+const brushSizeInput = document.getElementById('brush-size');
+brushSizeInput.addEventListener('input', (event) => {
+  brushSize = event.target.value; // Update the brush size
+});
+
+const letterDensityInput = document.getElementById('letter-density');
+letterDensityInput.addEventListener('input', (event) => {
+  letterDensity = event.target.value; // Update the letter density
+});
+
+const brushBtn = document.getElementById('brush-btn');
+const eraserBtn = document.getElementById('eraser-btn');
+
+function updateMode(newMode) {
+  mode = newMode;
+  if (newMode === 'brush') {
+    brushBtn.classList.add('active');
+    eraserBtn.classList.remove('active');
+  } else {
+    brushBtn.classList.remove('active');
+    eraserBtn.classList.add('active');
+  }
+}
+
+brushBtn.addEventListener('click', () => updateMode('brush'));
+eraserBtn.addEventListener('click', () => updateMode('eraser'));
+
+// Initialize the default mode
+updateMode('brush');
+</script>
+
+  
+  
+</body>
+</html>
