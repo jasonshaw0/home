@@ -1,52 +1,99 @@
-function animateProgressBar(progressBar, targetWidth) {
-  let width = 0;
-  const progressBarElement = progressBar.querySelector(".progress");
+document.addEventListener('DOMContentLoaded', () => {
+  const ham = document.querySelector('.hamburger')
+  const nav = document.querySelector('.nav-links')
+  ham.addEventListener('click', () => nav.classList.toggle('show'))
 
-  const interval = setInterval(() => {
-    if (width >= targetWidth) {
-      clearInterval(interval);
-    } else {
-      width++;
-      progressBarElement.style.width = width + "%";
-    }
-  }, 10); // Adjust the interval for smoother animation
-}
+  const backBtn = document.getElementById('backToTop')
+  window.addEventListener('scroll', () => {
+    backBtn.classList.toggle('show', window.scrollY > 150)
+  })
+  backBtn.addEventListener('click', () =>
+    window.scrollTo({ top: 1, behavior: 'smooth' })
+  )
 
-document.addEventListener("DOMContentLoaded", function () {
-  const progressBars = document.querySelectorAll(".progress-bar");
-  const targetWidths = [90, 90, 85, 70]; // Adjust the target widths accordingly
-
-  progressBars.forEach((progressBar, index) => {
-    animateProgressBar(progressBar, targetWidths[index]);
-  });
-});
-
-function toggleDropdown() {
-  var dropdownContent = document.getElementById("dropdownContent");
-  dropdownContent.style.display = (dropdownContent.style.display === "block") ? "none" : "block";
-}
-
-function toggleDropdown() {
-      var dropdownContent = document.getElementById("dropdownContent");
-      var arrowIcon = document.getElementById("arrowIcon");
-
-      if (dropdownContent.style.display === "block") {
-        dropdownContent.style.display = "none";
-        arrowIcon.classList.remove("rotate-up");
-      } else {
-        dropdownContent.style.display = "block";
-        arrowIcon.classList.add("rotate-up");
+  const observer = new IntersectionObserver((entries, o) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+        o.unobserve(entry.target)
       }
-    }
+    })
+  }, { threshold: 0.3 })
+  document.querySelectorAll('.content-section, .card').forEach(el =>
+    observer.observe(el)
+  )
 
-    function typeWriter() {
-      if (i < txt.length) {
-        document.getElementById("demo").innerHTML += txt.charAt(i);
-        i++;
-        setTimeout(typeWriter, speed);
-      }
-      var i = 0;
-      var txt = 'Lorem ipsum dummy text blabla.';
-      var speed = 50;
-      
+  new Swiper('.swiper-container', {
+    effect: 'coverflow', grabCursor: true, centeredSlides: true,
+    slidesPerView: 'auto',
+    coverflowEffect: { rotate: 50, depth: 100, modifier: 1, slideShadows: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+  })
+
+  const msg = "Hello, I'm Jason!"
+  let idx = 0
+  const out = document.getElementById('typedText')
+  ;(function type() {
+    if (idx < msg.length) {
+      out.textContent += msg[idx++]
+      setTimeout(type, 100)
     }
+  })()
+
+  const cvs = document.getElementById('bgCanvas')
+  const ctx = cvs.getContext('2d')
+  let W, H
+  const N = 100
+  const particles = []
+
+  function resize() {
+    W = cvs.width = innerWidth
+    H = cvs.height = innerHeight
+  }
+  window.addEventListener('resize', resize)
+  resize()
+
+  class P {
+    constructor() {
+      this.x = Math.random() * W
+      this.y = Math.random() * H
+      this.s = Math.random() + 0.5
+      this.vx = Math.random() * 0.4 - 0.2
+      this.vy = Math.random() * 0.4 - 0.2
+    }
+    update() {
+      this.x = (this.x + this.vx + W) % W
+      this.y = (this.y + this.vy + H) % H
+    }
+    draw() {
+      ctx.fillStyle = `rgba(200,200,200,${this.s / 2})`
+      ctx.beginPath()
+      ctx.arc(this.x, this.y, this.s, 0, 2 * Math.PI)
+      ctx.fill()
+    }
+  }
+
+  // worker.js
+addEventListener('fetch', event => {
+  event.respondWith(handle(event.request))
+})
+
+
+fetch('https://api64.ipify.org?format=json')
+  .then(res => res.json())
+  .then(json => {
+    document.querySelector('.contact-ip-placeholder').textContent = json.ip
+  })
+  .catch(() => {
+    document.querySelector('.contact-ip-placeholder').textContent = 'unavailable'
+  })
+
+
+  for (let i = 0; i < N; i++) particles.push(new P())
+
+  ;(function loop() {
+    ctx.clearRect(0, 0, W, H)
+    particles.forEach(p => { p.update(); p.draw() })
+    requestAnimationFrame(loop)
+  })()
+})
